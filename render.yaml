@@ -32,7 +32,7 @@ services:
       - key: BYTEFORCE_ALLOWED_ORIGINS
         sync: false
       - key: BYTEFORCE_TRUSTED_HOSTS
-        value: "*.onrender.com,localhost,127.0.0.1"
+        value: "*.onrender.com,*.vercel.app,localhost,127.0.0.1"
       - key: BYTEFORCE_RETENTION_DAYS
         value: "90"
       - key: BYTEFORCE_MAX_UPLOAD_BYTES
