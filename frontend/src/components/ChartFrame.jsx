@@ -1,0 +1,1 @@
+export default function ChartFrame({ title, subtitle, children, className='' }) { return <section className={`panel rounded-xl p-5 ${className}`}><div className="mb-5"><h2 className="font-bold text-slate-100">{title}</h2>{subtitle&&<p className="mt-1 text-xs text-slate-500">{subtitle}</p>}</div>{children}</section> }

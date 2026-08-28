@@ -1,0 +1,57 @@
+{
+  "SQL_INJECTION": {
+    "score": 88,
+    "patterns": ["(?:'|%27)(?:\\s|\\+)*(?:or|and)(?:\\s|\\+)+['0-9]", "\\bunion(?:\\s|\\+)+(?:all(?:\\s|\\+)+)?select\\b", "\\bselect\\b.+\\bfrom\\b", "--(?:\\s|$)"],
+    "evidence": "SQL-related syntax detected in a URL component."
+  },
+  "XSS": {
+    "score": 84,
+    "patterns": ["<\\s*script\\b", "javascript\\s*:", "on(?:error|load|click)\\s*=", "<\\s*(?:img|svg|iframe)\\b"],
+    "evidence": "Browser-executable markup or event-handler syntax was detected."
+  },
+  "DIRECTORY_TRAVERSAL": {
+    "score": 82,
+    "patterns": ["(?:\\.\\./){2,}", "(?:\\.\\.\\\\){2,}", "(?:/|\\\\)etc(?:/|\\\\)passwd", "boot\\.ini"],
+    "evidence": "Path traversal sequences target files outside the expected directory."
+  },
+  "COMMAND_INJECTION": {
+    "score": 86,
+    "patterns": ["[;&|]\\s*(?:id|whoami|uname|echo)\\b", "`[^`]{1,60}`", "\\$\\([^)]{1,80}\\)"],
+    "evidence": "A shell-style command separator or substitution marker was detected."
+  },
+  "LFI": {
+    "score": 85,
+    "patterns": ["(?:file|page|include|template)=[^&]*(?:\\.\\./|etc/passwd|proc/self)", "php://filter"],
+    "evidence": "A local-file inclusion style path appeared in an input parameter."
+  },
+  "RFI": {
+    "score": 78,
+    "patterns": ["(?:file|page|include|template)=https?://", "(?:include|require)=[^&]+\\.(?:txt|php)"],
+    "evidence": "An include-like parameter references a remote resource."
+  },
+  "WEB_SHELL_REFERENCE": {
+    "score": 92,
+    "patterns": ["/(?:shell|cmd|upload|backdoor)[-_a-z0-9]*\\.(?:php|jsp|aspx?)(?:\\?|$)"],
+    "evidence": "The request references a filename commonly associated with web-shell telemetry."
+  },
+  "WEB_SHELL_UPLOAD": {
+    "score": 94,
+    "patterns": ["filename\\s*=.*\\.(?:php|php[0-9]|phtml|jsp|jspx|asp|aspx)", "content-disposition.*\\.(?:php|jsp|aspx?)"],
+    "evidence": "A multipart upload references a server-executable script filename."
+  },
+  "XXE_INDICATOR": {
+    "score": 83,
+    "patterns": ["<!doctype[^>]+\\[", "<!entity\\s+", "system\\s+['\"](?:file|http)://"],
+    "evidence": "XML external-entity declaration syntax was detected."
+  },
+  "OPEN_REDIRECT": {
+    "score": 58,
+    "patterns": ["(?:redirect|return|next|continue|url)=https?://"],
+    "evidence": "A redirect-style parameter points to an absolute external URL."
+  },
+  "SCANNER_ACTIVITY": {
+    "score": 55,
+    "patterns": ["/(?:wp-admin|phpmyadmin|\\.env|\\.git/config|server-status)(?:/|\\?|$)"],
+    "evidence": "The request probes a path commonly seen in automated reconnaissance."
+  }
+}

@@ -1,0 +1,15 @@
+import { useState } from 'react'
+import { Route, Routes } from 'react-router-dom'
+import ArchitectureModal from './components/ArchitectureModal'
+import Header from './components/Header'
+import Sidebar from './components/Sidebar'
+import Analytics from './pages/Analytics'
+import Dashboard from './pages/Dashboard'
+import IPAnalysis from './pages/IPAnalysis'
+import PCAPAnalyzer from './pages/PCAPAnalyzer'
+import Operations from './pages/Operations'
+import Settings from './pages/Settings'
+import ThreatDetails from './pages/ThreatDetails'
+import ThreatExplorer from './pages/ThreatExplorer'
+
+export default function App(){const[architecture,setArchitecture]=useState(false);const[refresh,setRefresh]=useState(0);return <div className="min-h-screen"><Sidebar/><div className="md:pl-64"><Header onArchitecture={()=>setArchitecture(true)} onRefresh={()=>setRefresh(x=>x+1)}/><main className="relative p-4 pb-28 md:p-7"><Routes><Route path="/" element={<Dashboard refresh={refresh}/>}/><Route path="/threats" element={<ThreatExplorer refresh={refresh}/>}/><Route path="/threats/:id" element={<ThreatDetails/>}/><Route path="/pcap" element={<PCAPAnalyzer/>}/><Route path="/ip" element={<IPAnalysis/>}/><Route path="/analytics" element={<Analytics refresh={refresh}/>}/><Route path="/operations" element={<Operations/>}/><Route path="/settings" element={<Settings onRefresh={()=>setRefresh(x=>x+1)}/>} /></Routes></main></div><ArchitectureModal open={architecture} onClose={()=>setArchitecture(false)}/></div>}

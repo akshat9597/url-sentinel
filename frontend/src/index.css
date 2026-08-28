@@ -1,0 +1,19 @@
+@import "tailwindcss";
+
+:root { color-scheme: dark; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+* { box-sizing: border-box; }
+body { margin: 0; min-width: 320px; min-height: 100vh; color: #dbeafe; background: #050b14; }
+body::before { content: ""; position: fixed; inset: 0; pointer-events: none; background-image: linear-gradient(rgba(34,211,238,.025) 1px, transparent 1px), linear-gradient(90deg,rgba(34,211,238,.025) 1px,transparent 1px); background-size: 36px 36px; mask-image: linear-gradient(to bottom,black,transparent 75%); }
+button, input, select { font: inherit; }
+button { cursor: pointer; }
+.panel { background: linear-gradient(145deg, rgba(13,27,46,.92), rgba(8,19,33,.92)); border: 1px solid rgba(96,165,250,.13); box-shadow: 0 18px 60px rgba(0,0,0,.18); }
+.panel-glow { box-shadow: inset 0 1px 0 rgba(255,255,255,.035), 0 0 30px rgba(34,211,238,.035); }
+.field { width: 100%; border: 1px solid rgba(96,165,250,.17); background: rgba(3,10,20,.8); border-radius: .65rem; padding: .7rem .85rem; color: #dbeafe; outline: none; }
+.field:focus { border-color: rgba(34,211,238,.55); box-shadow: 0 0 0 3px rgba(34,211,238,.08); }
+.btn-primary { border: 1px solid rgba(34,211,238,.5); background: linear-gradient(135deg,#0891b2,#2563eb); color:white; border-radius:.65rem; padding:.68rem 1rem; font-weight:700; transition:.2s; }
+.btn-primary:hover { filter: brightness(1.1); transform: translateY(-1px); }
+.btn-secondary { border:1px solid rgba(96,165,250,.2); background:rgba(14,32,54,.85); color:#bfdbfe; border-radius:.65rem; padding:.68rem 1rem; font-weight:650; }
+.eyebrow { letter-spacing:.16em; text-transform:uppercase; font-size:.66rem; color:#67e8f9; font-weight:800; }
+.scrollbar::-webkit-scrollbar { width:6px; height:6px }.scrollbar::-webkit-scrollbar-thumb{background:#1e3a5f;border-radius:10px}
+.tooltip-wrap { position:relative }.tooltip-wrap:hover .tooltip-copy,.tooltip-wrap:focus-within .tooltip-copy{display:block}.tooltip-copy{display:none;position:absolute;z-index:30;bottom:calc(100% + 8px);left:0;width:260px;padding:.65rem .75rem;border-radius:.6rem;background:#0b1728;border:1px solid rgba(34,211,238,.3);color:#bfdbfe;font-size:.75rem;line-height:1.45;box-shadow:0 14px 35px #0008}
+@media (max-width: 768px) { .desktop-sidebar { display:none } }

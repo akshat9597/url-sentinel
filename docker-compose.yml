@@ -1,0 +1,44 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-byteforce}
+      POSTGRES_USER: ${POSTGRES_USER:-byteforce}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-byteforce-local-only}
+    volumes: ["byteforce-postgres:/var/lib/postgresql/data"]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-byteforce} -d ${POSTGRES_DB:-byteforce}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+  backend:
+    build: ./backend
+    ports: ["8000:8000"]
+    depends_on:
+      postgres: {condition: service_healthy}
+    environment:
+      DATABASE_URL: postgresql+psycopg://${POSTGRES_USER:-byteforce}:${POSTGRES_PASSWORD:-byteforce-local-only}@postgres:5432/${POSTGRES_DB:-byteforce}
+      BYTEFORCE_ENV: ${BYTEFORCE_ENV:-demo}
+      BYTEFORCE_OBSERVATION_MODE: ${BYTEFORCE_OBSERVATION_MODE:-true}
+      BYTEFORCE_AUTH_ENABLED: ${BYTEFORCE_AUTH_ENABLED:-false}
+      BYTEFORCE_SECRET_KEY: ${BYTEFORCE_SECRET_KEY:-}
+      BYTEFORCE_ADMIN_EMAIL: ${BYTEFORCE_ADMIN_EMAIL:-admin@byteforce.local}
+      BYTEFORCE_ADMIN_PASSWORD: ${BYTEFORCE_ADMIN_PASSWORD:-}
+      BYTEFORCE_AUTO_SEED: ${BYTEFORCE_AUTO_SEED:-true}
+      BYTEFORCE_BOOTSTRAP_MODEL: ${BYTEFORCE_BOOTSTRAP_MODEL:-true}
+      BYTEFORCE_ALLOWED_ORIGINS: ${BYTEFORCE_ALLOWED_ORIGINS:-http://localhost:5173,http://localhost:8080}
+      BYTEFORCE_TRUSTED_HOSTS: ${BYTEFORCE_TRUSTED_HOSTS:-localhost,127.0.0.1,backend}
+    volumes: ["byteforce-models:/app/data/models"]
+  frontend:
+    build: ./frontend
+    ports: ["5173:80"]
+    depends_on: [backend]
+  gateway:
+    image: nginx:1.27-alpine
+    profiles: ["gateway"]
+    ports: ["8080:80"]
+    volumes: ["./deploy/nginx.conf:/etc/nginx/conf.d/default.conf:ro"]
+    depends_on: [frontend, backend]
+volumes:
+  byteforce-postgres:
+  byteforce-models:

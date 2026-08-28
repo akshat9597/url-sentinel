@@ -1,0 +1,22 @@
+# Python
+backend/venv/
+backend/.venv/
+backend/__pycache__/
+backend/**/__pycache__/
+backend/.pytest_cache/
+backend/*.db
+backend/data/*.joblib
+backend/data/models/
+.env
+*.log
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+
+# Local settings and operating-system files
+.env
+.env.*
+!.env.example
+.DS_Store
+*.log

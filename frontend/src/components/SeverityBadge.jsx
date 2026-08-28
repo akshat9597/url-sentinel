@@ -1,0 +1,2 @@
+const styles = { LOW:'bg-emerald-400/10 text-emerald-300 border-emerald-400/20', MEDIUM:'bg-amber-400/10 text-amber-300 border-amber-400/20', HIGH:'bg-orange-400/10 text-orange-300 border-orange-400/20', CRITICAL:'bg-red-500/12 text-red-300 border-red-500/25' }
+export default function SeverityBadge({ value='LOW' }) { return <span className={`inline-flex rounded-md border px-2 py-1 text-[10px] font-black tracking-wider ${styles[value] || styles.LOW}`}>{value}</span> }
