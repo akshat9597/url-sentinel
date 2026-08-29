@@ -55,7 +55,9 @@ On Vercel's **New Project** screen use:
 | Output Directory | `dist` (default) |
 | Install Command | `npm install` (default) |
 
-The frontend needs **no secret environment variables**. Remove the 20 automatically detected backend variables from the Vercel frontend project. In particular, never put database passwords or `BYTEFORCE_SECRET_KEY` into a `VITE_*` variable, because Vite variables are public browser code.
+The frontend needs no secret environment variables. The repository's `frontend/vercel.json` rewrites `/api/*` to the Render API, so `VITE_API_URL` can remain unset. If you prefer direct API calls, set `VITE_API_URL` to the Render API URL, for example `https://byteforce-api-akshat9597.onrender.com`; never put database passwords or `BYTEFORCE_SECRET_KEY` into a `VITE_*` variable because Vite variables are public browser code.
+
+Remove backend variables accidentally detected by Vercel. Only variables beginning with `VITE_` are exposed to the browser.
 
 Click **Deploy** only after the Render health URL works.
 
@@ -66,6 +68,8 @@ Click **Deploy** only after the Render health URL works.
 3. Set `BYTEFORCE_ALLOWED_ORIGINS` to the exact assigned Vercel origin, without a trailing slash.
 4. Redeploy/restart the Render service.
 5. Open `<your-vercel-url>/operations` and sign in.
+
+For a custom frontend domain, set `BYTEFORCE_ALLOWED_ORIGINS` to that exact `https://` origin. If using direct API calls instead of the Vercel rewrite, also set `VITE_API_URL` in Vercel and redeploy the frontend. Render's `BYTEFORCE_TRUSTED_HOSTS` must include the Render hostname and any custom API hostname.
 
 ## Step 5: load data
 

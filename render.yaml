@@ -28,7 +28,7 @@ services:
       - key: BYTEFORCE_AUTO_SEED
         value: "false"
       - key: BYTEFORCE_BOOTSTRAP_MODEL
-        value: "true"
+        value: "false"
       - key: BYTEFORCE_ALLOWED_ORIGINS
         sync: false
       - key: BYTEFORCE_TRUSTED_HOSTS
