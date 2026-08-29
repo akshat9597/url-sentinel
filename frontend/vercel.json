@@ -4,7 +4,7 @@
   "rewrites": [
     {
       "source": "/api/:path*",
-      "destination": "https://byteforce-api-akshat9597.onrender.com/api/:path*"
+      "destination": "https://url-sentinel-xdak.onrender.com/api/:path*"
     },
     {
       "source": "/(.*)",
