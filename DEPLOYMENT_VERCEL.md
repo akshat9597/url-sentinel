@@ -46,12 +46,12 @@ Use these exact settings. The **Root Directory** is important: without it, Rende
 | Setting | Value |
 |---|---|
 | Environment | Docker |
-| Root Directory | `backend` |
-| Dockerfile Path | `Dockerfile` |
+| Root Directory | blank / repository root |
+| Dockerfile Path | `backend/Dockerfile` |
 | Docker Build Context Directory | `.` |
 | Health Check Path | `/api/health` |
 
-Do not enter `backend/Dockerfile` while leaving Root Directory blank. That combination causes the build error `"/requirements.txt": not found`.
+The Dockerfile is intentionally written for the repository-root context: it copies `backend/requirements.txt` and the `backend/` source tree into the image. These settings match the Render build log and avoid the error `"/requirements.txt": not found`.
 
 The free Render PostgreSQL offering is suitable for a short demonstration but currently expires after its free period. Use a paid PostgreSQL plan or another managed PostgreSQL service for a lasting deployment.
 
