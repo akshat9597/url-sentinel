@@ -56,6 +56,7 @@ The project documentation is separated by audience and purpose:
 - [Browser extension roadmap](docs/06-browser-extension-roadmap.md)
 - [Supporting material and visual assets](docs/07-supporting-material-and-visual-assets.md)
 - [Presentation: capability, reality alignment, and roadmap](docs/08-presentation-capability-and-roadmap.md)
+- [Ubuntu server and internet deployment runbook](docs/09-ubuntu-server-and-internet-deployment.md)
 
 ## Architecture
 
