@@ -39,6 +39,20 @@ git push origin main
 
 If Render assigns a different service URL, change the API destination in `frontend/vercel.json`, commit, and push before deploying Vercel.
 
+### If creating the Render service manually
+
+Use these exact settings. The **Root Directory** is important: without it, Render uses the repository root as the Docker build context and `COPY requirements.txt` fails because the file is inside `backend/`.
+
+| Setting | Value |
+|---|---|
+| Environment | Docker |
+| Root Directory | `backend` |
+| Dockerfile Path | `Dockerfile` |
+| Docker Build Context Directory | `.` |
+| Health Check Path | `/api/health` |
+
+Do not enter `backend/Dockerfile` while leaving Root Directory blank. That combination causes the build error `"/requirements.txt": not found`.
+
 The free Render PostgreSQL offering is suitable for a short demonstration but currently expires after its free period. Use a paid PostgreSQL plan or another managed PostgreSQL service for a lasting deployment.
 
 ## Step 3: deploy the frontend on Vercel
