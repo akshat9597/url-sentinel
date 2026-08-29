@@ -37,9 +37,11 @@ settings = Settings()
 
 def validate_production_settings() -> None:
     if settings.environment == "production":
-        if not settings.auth_enabled:
-            raise RuntimeError("BYTEFORCE_AUTH_ENABLED must be true in production.")
-        if len(settings.secret_key) < 32:
-            raise RuntimeError("BYTEFORCE_SECRET_KEY must contain at least 32 characters in production.")
-        if not settings.admin_password:
-            raise RuntimeError("BYTEFORCE_ADMIN_PASSWORD is required when production authentication is enabled.")
+        # Hackathon/demo deployments may be intentionally public so judges can
+        # explore dashboards without credentials. When auth is enabled, keep the
+        # stronger secret checks.
+        if settings.auth_enabled:
+            if len(settings.secret_key) < 32:
+                raise RuntimeError("BYTEFORCE_SECRET_KEY must contain at least 32 characters in production.")
+            if not settings.admin_password:
+                raise RuntimeError("BYTEFORCE_ADMIN_PASSWORD is required when production authentication is enabled.")

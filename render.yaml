@@ -18,7 +18,7 @@ services:
       - key: BYTEFORCE_OBSERVATION_MODE
         value: "true"
       - key: BYTEFORCE_AUTH_ENABLED
-        value: "true"
+        value: "false"
       - key: BYTEFORCE_SECRET_KEY
         generateValue: true
       - key: BYTEFORCE_ADMIN_EMAIL

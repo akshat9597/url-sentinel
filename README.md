@@ -395,6 +395,8 @@ Secret query values are redacted before persistence.
 
 Production deployments can use signed HttpOnly authentication cookies.
 
+For a public hackathon judging demo, set `BYTEFORCE_AUTH_ENABLED=false` so every page opens without sign-in. If you later enable authentication, configure `BYTEFORCE_SECRET_KEY`, `BYTEFORCE_ADMIN_EMAIL`, and `BYTEFORCE_ADMIN_PASSWORD`.
+
 CORS and trusted hosts are configurable.
 
 Upload types and sizes are restricted.

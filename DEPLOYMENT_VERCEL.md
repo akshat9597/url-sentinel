@@ -53,6 +53,38 @@ Use these exact settings. The **Root Directory** is important: without it, Rende
 
 The Dockerfile is intentionally written for the repository-root context: it copies `backend/requirements.txt` and the `backend/` source tree into the image. These settings match the Render build log and avoid the error `"/requirements.txt": not found`.
 
+Add these variables under **Render → Service → Environment** before the first
+production deploy:
+
+| Variable | Required value |
+|---|---|
+| `BYTEFORCE_ENV` | `production` |
+| `BYTEFORCE_OBSERVATION_MODE` | `true` |
+| `BYTEFORCE_AUTH_ENABLED` | `false` for the public hackathon demo; use `true` only when you want administrator sign-in |
+| `BYTEFORCE_SECRET_KEY` | Required only when `BYTEFORCE_AUTH_ENABLED=true`; use Render's **Generate** option, or a private random value of at least 32 characters |
+| `BYTEFORCE_ADMIN_EMAIL` | Required only when `BYTEFORCE_AUTH_ENABLED=true` |
+| `BYTEFORCE_ADMIN_PASSWORD` | Required only when `BYTEFORCE_AUTH_ENABLED=true` |
+| `BYTEFORCE_AUTO_SEED` | `false` |
+| `BYTEFORCE_BOOTSTRAP_MODEL` | `false` |
+| `BYTEFORCE_ALLOWED_ORIGINS` | Your exact Vercel origin, such as `https://byteforce-sih-2025.vercel.app` |
+| `BYTEFORCE_TRUSTED_HOSTS` | `*.onrender.com,*.vercel.app,localhost,127.0.0.1` |
+
+Generate a value locally if Render's **Generate** button is unavailable:
+
+```bash
+openssl rand -hex 32
+```
+
+Paste the output only into Render's `BYTEFORCE_SECRET_KEY` value. Do not commit
+it, put it in Vercel, reuse the administrator password, or use a public file
+checksum as the secret. After saving the variables, choose **Manual Deploy →
+Deploy latest commit** (or restart the service).
+
+If startup reports `BYTEFORCE_SECRET_KEY must contain at least 32 characters`,
+authentication is enabled and the variable is missing, shorter than 32
+characters, or was added to the wrong Render service/environment. For a public
+hackathon demo, set `BYTEFORCE_AUTH_ENABLED=false`, save, rebuild, and deploy.
+
 The free Render PostgreSQL offering is suitable for a short demonstration but currently expires after its free period. Use a paid PostgreSQL plan or another managed PostgreSQL service for a lasting deployment.
 
 ## Step 3: deploy the frontend on Vercel
@@ -81,7 +113,7 @@ Click **Deploy** only after the Render health URL works.
 2. If it differs from `https://byteforce-sih-2025.vercel.app`, open the Render service settings.
 3. Set `BYTEFORCE_ALLOWED_ORIGINS` to the exact assigned Vercel origin, without a trailing slash.
 4. Redeploy/restart the Render service.
-5. Open `<your-vercel-url>/operations` and sign in.
+5. Open `<your-vercel-url>/operations` and confirm the page loads without a sign-in form.
 
 For a custom frontend domain, set `BYTEFORCE_ALLOWED_ORIGINS` to that exact `https://` origin. If using direct API calls instead of the Vercel rewrite, also set `VITE_API_URL` in Vercel and redeploy the frontend. Render's `BYTEFORCE_TRUSTED_HOSTS` must include the Render hostname and any custom API hostname.
 
@@ -89,9 +121,8 @@ For a custom frontend domain, set `BYTEFORCE_ALLOWED_ORIGINS` to that exact `htt
 
 For a judging dashboard:
 
-1. Sign in through **Operations**.
-2. Open **Settings**.
-3. Click **Load Demo Dataset**.
+1. Open **Settings**.
+2. Click **Load Demo Dataset**.
 
 For authorized real telemetry:
 
@@ -104,7 +135,7 @@ For authorized real telemetry:
 
 - `/api/health` shows `database: postgresql`.
 - Vercel `/operations` opens after a direct refresh.
-- Sign-in succeeds and the dashboard APIs do not return 401 afterward.
+- Dashboard, Settings, PCAP Analyzer, and Operations work without sign-in in public demo mode.
 - Load Demo Dataset populates charts.
 - `backend/data/demo_access.log` produces five processed records and three threats.
 - CSV and JSON downloads work.
