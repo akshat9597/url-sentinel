@@ -1,4 +1,4 @@
-import { AlertTriangle, CheckCircle2, FileScan, UploadCloud } from 'lucide-react'
+import { AlertTriangle, CheckCircle2, Download, FileScan, PlayCircle, UploadCloud } from 'lucide-react'
 import { useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { api } from '../lib/api'
@@ -74,7 +74,7 @@ export default function PCAPAnalyzer() {
       setResult({
         message:
           error.response?.data?.detail ||
-          'Demo PCAP results could not be loaded. Sign in from Operations and try again.',
+          'Demo PCAP results could not be loaded. Verify the backend is awake and try again.',
       })
       setState('error')
     }
@@ -141,6 +141,34 @@ export default function PCAPAnalyzer() {
               onClick={analyze}
             >
               {state === 'processing' ? 'Processing capture...' : 'Analyze Capture'}
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section className="panel rounded-2xl p-5">
+        <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
+          <div className="flex items-start gap-4">
+            <div className="grid h-12 w-12 shrink-0 place-items-center rounded-xl border border-cyan-400/20 bg-cyan-400/8 text-cyan-300">
+              <FileScan size={23} />
+            </div>
+            <div>
+              <div className="eyebrow">Bundled demonstration capture</div>
+              <h3 className="mt-1 text-lg font-black text-white">byteforce_demo.pcap</h3>
+              <p className="mt-1 max-w-3xl text-sm leading-6 text-slate-500">
+                Safe synthetic HTTP telemetry for your hackathon demo. Download the PCAP for local testing,
+                or load the prepared PCAP results on the hosted demo when Zeek is unavailable.
+              </p>
+            </div>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            <a className="btn-secondary flex items-center gap-2" href="/demo/byteforce_demo.pcap" download>
+              <Download size={16} />
+              Download PCAP
+            </a>
+            <button className="btn-primary flex items-center gap-2" onClick={demo} disabled={state === 'processing'}>
+              <PlayCircle size={16} />
+              {state === 'processing' ? 'Loading demo...' : 'Load Demo Results'}
             </button>
           </div>
         </div>
